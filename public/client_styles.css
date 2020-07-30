@@ -1,0 +1,11 @@
+th {
+    background: #c6e0f4;
+    border: 1px solid #4791c5;
+    color: black;
+    line-height: 1.5em;
+    padding-left: 0.5em;
+    text-align: center;
+    width: 12.5%;
+    font-size: 12px;
+    font-weight: bold;
+}
