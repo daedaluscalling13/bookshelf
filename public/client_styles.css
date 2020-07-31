@@ -9,3 +9,7 @@ th {
     font-size: 12px;
     font-weight: bold;
 }
+
+input {
+    display: run-in;
+}
