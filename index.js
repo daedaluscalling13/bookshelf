@@ -1,5 +1,5 @@
 var express = require('express');
-// var mysql = require('./dbcon.js');
+var mysql = require('./dbcon.js');
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -12,17 +12,34 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+const selectAllQuery = 'SELECT * FROM foodlog';
+const insertQuery = "INSERT INTO foodlog (`date`, `name`, `calories`, `carbs`, `protein`, `fats`, `fiber`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+const deleteQuery = "DELETE FROM foodlog WHERE id=?";
+const updateQuery = "UPDATE foodlog SET date=?, name=?, calories=?, carbs=?, protein=? fats=? fiber=? WHERE id=? ";
+const dropTableQuery = "DROP TABLE IF EXISTS foodlog";
+const makeTableQuery = `CREATE TABLE foodlog(
+                        id INT PRIMARY KEY AUTO_INCREMENT,
+                        date DATE,
+                        name VARCHAR(255) NOT NULL,
+                        calories INT,
+                        carbs FLOAT,
+                        protein FLOAT,
+                        fats FLOAT,
+                        fiber FLOAT)`;
+
+const getAllData = (res) => {
+  mysql.pool.query(selectAllQuery, function(err, rows, fields){
+    if(err){
+      next(err);
+      return;
+    }
+
+    res.json({ rows: rows });
+  });
+}
+
 app.get('/',function(req,res,next){
   var context = {};
-  // mysql.pool.query(selectAllQuery, function(err, rows, fields){
-  //   if(err){
-  //     next(err);
-  //     return;
-  //   }
-  //   context.results = rows;
-  //   console.log(context.results);
-  //   res.render('home', context);
-  // });
   res.render('home', context);
 });
 
