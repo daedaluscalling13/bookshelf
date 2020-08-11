@@ -10,6 +10,14 @@ th {
     font-weight: bold;
 }
 
+td {
+    background-color: #F0F8FF;
+    border: 1px solid #A8D0EE;
+    height: 5.5em;
+    vertical-align: top;
+    width: 12.5%;
+}
+
 input {
     display: run-in;
 }
