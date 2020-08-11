@@ -40,13 +40,33 @@ const getAllData = (res) => {
 
 app.get('/',function(req,res,next){
   var context = {};
+  mysql.pool.query(selectAllQuery, function(err, rows, fields){
+    if(err){
+      next(err);
+      return;
+    }
+    context.results = rows;
+    console.log(context.results);
   res.render('home', context);
 });
 
 app.get('/new_daily_entry', function(req, res, next){
   var context = {};
   res.render('new_daily_entry', context)
-})
+});
+
+app.post('/',function(req,res,next){
+  var context = {};
+  var {date, name, calories, carbs, protein, fat, fiber} = req.body;
+  console.log(name);
+  mysql.pool.query(insertQuery, [date, name, calories, carbs, protein, fat, fiber], function(err, result){
+    if(err){
+      next(err);
+      return;
+    }
+    getAllData(res);
+  });
+});
 
 app.use(function(req,res){
   res.status(404);
