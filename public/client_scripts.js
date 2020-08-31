@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', dailyEntryButton);
 
 // ASYNC FORM SUBMISSION
 function dailyEntryButton(){
-    document.getElementById("Submit").addEventListener("click", function(event){
+    document.getElementById("dailyEntrySubmit").addEventListener("click", function(event){
         
         // Make JSON to be sent with HTTP request
         var payload = {userName:null, userAge:null, userPhrase:null};

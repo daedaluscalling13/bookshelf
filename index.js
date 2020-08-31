@@ -48,6 +48,7 @@ app.get('/',function(req,res,next){
     context.results = rows;
     console.log(context.results);
   res.render('home', context);
+  });
 });
 
 app.get('/new_daily_entry', function(req, res, next){
@@ -65,6 +66,16 @@ app.post('/',function(req,res,next){
       return;
     }
     getAllData(res);
+  });
+});
+
+app.get('/reset-table',function(req,res,next){
+  var context = {};
+  mysql.pool.query(dropTableQuery, function(err){
+    mysql.pool.query(makeTableQuery, function(err){
+      context.results = "Table reset";
+      res.render('home',context);
+    })
   });
 });
 
