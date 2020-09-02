@@ -1,4 +1,8 @@
 var express = require('express');
+var request = require('request');
+
+var apiKey = 'kUNQHUhbZZWTFUPqXk1iXw';
+var apiSecret = 'h6l8gxqtRURnloale4gSvLLL6MI4IWNtGVt3U5xpSk';
 
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
@@ -13,6 +17,17 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.get('/',function(req,res,next){
   var context = {};
+
+  request('https://www.goodreads.com/review/list?v=2&id=120733123&key=' + apiKey, function(err, response, body){
+    if(!err && response.statusCode < 400){
+      //Do something
+      console.log(response)
+    } else {
+      if(response){
+        console.log(response.statusCode);
+      }
+    }
+  })
   res.render('home', context);
 });
 
