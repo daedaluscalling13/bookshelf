@@ -1,5 +1,6 @@
 var express = require('express');
 var request = require('request');
+const xml2js = require('xml2js');
 
 var apiKey = 'kUNQHUhbZZWTFUPqXk1iXw';
 var apiSecret = 'h6l8gxqtRURnloale4gSvLLL6MI4IWNtGVt3U5xpSk';
@@ -21,7 +22,17 @@ app.get('/',function(req,res,next){
   request('https://www.goodreads.com/review/list?v=2&id=120733123&key=' + apiKey, function(err, response, body){
     if(!err && response.statusCode < 400){
       //Do something
-      console.log(response)
+      context.response = response;
+      xml2js.parseString(response, (err, result) => {
+        if(err){
+          throw err;
+        }
+
+        const json = JSON.stringify(result, null, 4);
+        console.log(json)
+      })
+
+      // console.log(response)
     } else {
       if(response){
         console.log(response.statusCode);
