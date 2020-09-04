@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 const xml2js = require('xml2js');
+const fs = require('fs');
 
 var apiKey = 'kUNQHUhbZZWTFUPqXk1iXw';
 var apiSecret = 'h6l8gxqtRURnloale4gSvLLL6MI4IWNtGVt3U5xpSk';
@@ -19,20 +20,26 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res,next){
   var context = {};
 
-  request('https://www.goodreads.com/review/list?v=2&id=120733123&key=' + apiKey, function(err, response, body){
+  request('https://www.goodreads.com/review/list?v=2&id=120733123&shelf=to-read&key=' + apiKey, function(err, response, body){
     if(!err && response.statusCode < 400){
-      //Do something
-      context.response = response;
-      xml2js.parseString(response, (err, result) => {
+
+      xml2js.parseString(response.body, (err, result) => {
         if(err){
           throw err;
         }
 
         const json = JSON.stringify(result, null, 4);
-        console.log(json)
-      })
 
-      // console.log(response)
+        fs.writeFile("myFile2.xml", json["GoodreadsResponse"], (err) =>{
+          if(err){
+            throw err;
+          } else {
+            console.log("file written");
+          }
+        });
+        // console.log(json)
+      });
+
     } else {
       if(response){
         console.log(response.statusCode);
