@@ -23,45 +23,22 @@ app.get('/',function(req,res,next){
   request('https://www.goodreads.com/review/list?v=2&id=120733123&shelf=to-read&key=' + apiKey, function(err, response, body){
     if(!err && response.statusCode < 400){
 
-      fs.writeFile("myFile.xml", response.body, (err) =>{
-        if(err){
-          throw err;
-        } else {
-          console.log("file written");
-        }
-      });
-
       xml2js.parseString(response.body, (err, result) => {
         if(err){
           throw err;
         }
 
-        fs.writeFile("myFile2.xml", result, (err) =>{
-          if(err){
-            throw err;
-          } else {
-            console.log("file written");
-          }
-        });
+        // fs.writeFile("myFile4.xml", JSON.stringify(result["GoodreadsResponse"]["reviews"][0]["review"][0]["book"][0]["image_url"], null, 4), (err) =>{
+        //   if(err){
+        //     throw err;
+        //   } else {
+        //     console.log("file written");
+        //   }
+        // });
 
-        const json = JSON.stringify(result, null, 4);
-
-        fs.writeFile("myFile3.xml", json, (err) =>{
-          if(err){
-            throw err;
-          } else {
-            console.log("file written");
-          }
-        });
-
-        fs.writeFile("myFile4.xml", JSON.stringify(result["GoodreadsResponse"]["reviews"][0]["review"][0], null, 4), (err) =>{
-          if(err){
-            throw err;
-          } else {
-            console.log("file written");
-          }
-        });
-        // console.log(json)
+        context.image_url = result["GoodreadsResponse"]["reviews"][0]["review"][0]["book"][0]["image_url"][0];
+        
+        res.render('home', context);
       });
 
     } else {
@@ -69,8 +46,7 @@ app.get('/',function(req,res,next){
         console.log(response.statusCode);
       }
     }
-  })
-  res.render('home', context);
+  });
 });
 
 app.use(function(req,res){
