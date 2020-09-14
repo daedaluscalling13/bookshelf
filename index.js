@@ -27,16 +27,13 @@ app.get('/',function(req,res,next){
         if(err){
           throw err;
         }
+        
+        // context.image_url = result["GoodreadsResponse"]["reviews"][0]["review"][0]["book"][0]["image_url"][0];
 
-        // fs.writeFile("myFile4.xml", JSON.stringify(result["GoodreadsResponse"]["reviews"][0]["review"][0]["book"][0]["image_url"], null, 4), (err) =>{
-        //   if(err){
-        //     throw err;
-        //   } else {
-        //     console.log("file written");
-        //   }
-        // });
-
-        context.image_url = result["GoodreadsResponse"]["reviews"][0]["review"][0]["book"][0]["image_url"][0];
+        context.image_array = [];
+        result["GoodreadsResponse"]["reviews"][0]["review"].forEach((item, index) => {
+          context.image_array.push(result["GoodreadsResponse"]["reviews"][0]["review"][index]["book"][0]["image_url"][0]);
+        })
         
         res.render('home', context);
       });
