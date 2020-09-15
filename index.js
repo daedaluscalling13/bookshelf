@@ -7,7 +7,25 @@ var apiKey = 'kUNQHUhbZZWTFUPqXk1iXw';
 var apiSecret = 'h6l8gxqtRURnloale4gSvLLL6MI4IWNtGVt3U5xpSk';
 
 var app = express();
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var exhandlebars = require('express-handlebars')
+var handlebars = exhandlebars.create({
+  defaultLayout:'main',
+  helpers: {
+    createCarousel: (image_array) => {
+      carouselHtml = "<div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'\n";
+      carouselHtml = carouselHtml + "\r<div class='carousel-inner'\n";
+      carouselHtml = carouselHtml + "\r\r<div class='carousel-item active'\n";
+      carouselHtml = carouselHtml + "\r\r\r<img class='d-block w-100' src='" + image_array[0] + "'>\n"
+      carouselHtml = carouselHtml + "\r\r</div>\r"
+      carouselHtml = carouselHtml + "\r\r<div class='carousel-item'\n";
+      carouselHtml = carouselHtml + "\r\r\r<img class='d-block w-100' src='" + image_array[1] + "'>\n"
+      carouselHtml = carouselHtml + "\r\r</div>\r"
+      carouselHtml = carouselHtml + "\r</div>\r"
+      carouselHtml = carouselHtml + "</div>\r"
+      return carouselHtml;
+    }
+  }
+  });
 var path = require('path')
 
 app.engine('handlebars', handlebars.engine);
