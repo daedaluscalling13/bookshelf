@@ -15,14 +15,13 @@ var handlebars = exhandlebars.create({
       carouselHtml = "<div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>\n";
       carouselHtml = carouselHtml + "\r<div class='carousel-inner'>\n";
       carouselHtml = carouselHtml + "\r\r<div class='carousel-item active'>\n";
-      carouselHtml = carouselHtml + "\r\r\r<img class='d-block w-100' src='" + image_array[0] + "'>\n"
+      carouselHtml = carouselHtml + "\r\r\r<img src='" + image_array[0] + "'>\n"
       carouselHtml = carouselHtml + "\r\r</div>\n"
       carouselHtml = carouselHtml + "\r\r<div class='carousel-item'>\n";
-      carouselHtml = carouselHtml + "\r\r\r<img class='d-block w-100' src='" + image_array[1] + "'>\n"
+      carouselHtml = carouselHtml + "\r\r\r<img src='" + image_array[1] + "'>\n"
       carouselHtml = carouselHtml + "\r\r</div>\n"
       carouselHtml = carouselHtml + "\r</div>\n"
       carouselHtml = carouselHtml + "</div>\n"
-      // carouselHtml = "<img class='d-block w-100' src='" + image_array[0] + "'>"
       return carouselHtml;
     }
   }
