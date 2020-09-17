@@ -21,7 +21,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.get('/',function(req,res,next){
   var context = {};
 
-  request('https://www.goodreads.com/review/list?v=2&id=120733123&shelf=to-read&key=' + apiKey, function(err, response, body){
+  request('https://www.goodreads.com/review/list?v=2&id=120733123&key=' + apiKey, function(err, response, body){
     if(!err && response.statusCode < 400){
 
       xml2js.parseString(response.body, (err, result) => {
